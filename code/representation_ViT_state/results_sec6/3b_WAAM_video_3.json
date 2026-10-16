@@ -1,0 +1,57 @@
+{
+ "process": "WAAM",
+ "record": "video_3",
+ "grid": [
+  {
+   "share": 0.2,
+   "t_f": 5.44,
+   "k": 68,
+   "med_dist_id": 0.1287359744310379,
+   "med_dist_frozen": 0.3788596987724304,
+   "ratio": 2.942920207977295
+  },
+  {
+   "share": 0.3,
+   "t_f": 8.16,
+   "k": 102,
+   "med_dist_id": 0.13122689723968506,
+   "med_dist_frozen": 0.11721597611904144,
+   "ratio": 0.8932313323020935
+  },
+  {
+   "share": 0.4,
+   "t_f": 10.96,
+   "k": 137,
+   "med_dist_id": 0.14368291199207306,
+   "med_dist_frozen": 0.16108524799346924,
+   "ratio": 1.121116280555725
+  },
+  {
+   "share": 0.5,
+   "t_f": 13.68,
+   "k": 171,
+   "med_dist_id": 0.1592574119567871,
+   "med_dist_frozen": 0.11053808778524399,
+   "ratio": 0.6940844058990479
+  }
+ ],
+ "chosen": {
+  "share": 0.3,
+  "t_f": 8.16,
+  "k": 102,
+  "med_dist_id": 0.13122689723968506,
+  "med_dist_frozen": 0.11721597611904144,
+  "ratio": 0.8932313323020935
+ },
+ "E_identified": 0.0030075544491410255,
+ "E_frozen": 0.031448107212781906,
+ "E_between_runs": 0.031227417290210724,
+ "note": "computed with a numpy port of the forward pass (PyTorch unavailable); checked against gen_WAAM_video_3.npz written by the torch code",
+ "port_check": {
+  "max_abs_z": 1.0728836059570312e-06,
+  "max_abs_delta": 5.960464477539063e-08,
+  "max_abs_struct": 0.0008832216262817383,
+  "max_abs_gen": 0.000988602638244629,
+  "mean_abs_gen": 7.919056952232495e-05
+ }
+}
