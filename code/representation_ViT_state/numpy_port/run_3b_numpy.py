@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""sec6_experiments.part_3b for WAAM video_3, in numpy (no retraining, forward passes only).
+"""sec6_experiments.part_3b in numpy (no retraining, forward passes only).
+
+    python numpy_port/run_3b_numpy.py WAAM video_3     # from Coding Project/representation_ViT_state
+    python numpy_port/run_3b_numpy.py GMAW exp_05
 
 Same steps as part_3b: identified rollout of the two-state model, delta frozen at t_f, t_f taken
 as the earliest of 20/30/40/50 % of the record whose median nearest-recorded-state distance over
 t > t_f stays within 1.5x that of the identified run; decoding by the trained structure decoder
 plus the residual layer retrieved from recorded frames.
 
-The port is checked against gen_WAAM_video_3.npz, written by the torch code for the same model.
-This is how results_sec6/3b_WAAM_video_3.{npz,json} were produced (2026-10-16): PyTorch was not
-available where it ran. With PyTorch, `python -c "import sec6_experiments as X; X.part_3b('WAAM',
-'video_3')"` runs the original code on the same model and should give the same t_f and arrays to
-within float rounding.
-
-    python numpy_port/run_3b_waam_numpy.py      # from Coding Project/representation_ViT_state
+The port is checked against gen_{process}_{record}.npz, written by the torch code for the same model.
+results_sec6/3b_WAAM_video_3 and 3b_GMAW_exp_05 were produced this way (2026-10-16), because PyTorch
+was not available where they ran; 3b_GTAW_Iden_02 comes from the torch code itself. With PyTorch,
+`python -c "import sec6_experiments as X; X.part_3b('GMAW', 'exp_05')"` runs the original code on the
+same model and should give the same t_f and arrays to within float rounding.
 """
 import json
 import sys
@@ -28,7 +29,13 @@ import npt  # noqa: E402
 R = Path(__file__).resolve().parent.parent          # Coding Project/representation_ViT_state
 OUT = R / "results_sec6"
 OUT.mkdir(exist_ok=True)
-PROCESS, SID, SMOOTH, IDS = "WAAM", "video_3", 25, ("video_1", "video_3", "video_5")
+CFG = {"WAAM": dict(smooth=25, ids=("video_1", "video_3", "video_5")),
+       "GMAW": dict(smooth=24, ids=("exp_01", "exp_02", "exp_03", "exp_04", "exp_05", "exp_06",
+                                    "exp_07", "exp_09", "exp_10")),
+       "GTAW": dict(smooth=20, ids=("Iden_06", "Iden_01", "Iden_02", "Iden_07", "Iden_08", "Iden_09",
+                                    "Iden_10", "Iden_11", "Iden_12", "Iden_13"))}
+PROCESS, SID = (sys.argv[1], sys.argv[2]) if len(sys.argv) > 2 else ("WAAM", "video_3")
+SMOOTH, IDS = CFG[PROCESS]["smooth"], CFG[PROCESS]["ids"]
 SHARES = (0.20, 0.30, 0.40, 0.50)
 
 
@@ -73,15 +80,20 @@ def decode(raw, dec, vq=None, field=None, chunk=16):
 
 def main():
     t0 = time.time()
-    ck = npt.load_pt(R / "results_node_aligned_WAAM" / f"{SID}_A_m1_e1200.pt")
+    gen_dir = R / ("results_generator" if PROCESS == "GTAW" else f"results_generator_{PROCESS}")
+    ck = npt.load_pt(R / f"results_node_aligned_{PROCESS}" / f"{SID}_A_m1_e1200.pt")
     model = npt.AlignedNODE(ck["model"])
     mean, std, dt = ck["mean"].astype(np.float32), ck["std"].astype(np.float32), float(ck["dt"])
-    states = npt.load_pt(R / "results_generator_WAAM" / "states.pt")
-    codes = npt.load_pt(R / "results_generator_WAAM" / "codes.pt")
-    zr = states[SID].astype(np.float32)
-    z_obs = uniform_filter1d(zr, SMOOTH, axis=0, mode="nearest").astype(np.float32)
+    states = npt.load_pt(gen_dir / "states.pt")
+    codes = npt.load_pt(gen_dir / "codes.pt")
+    # the identification record as node_aligned.fit stored it: smoothed state, input and speed
+    fit = np.load(R / f"results_node_aligned_{PROCESS}" / f"{SID}_A_m1_e1200.npz")
+    z_obs = fit["z_true"].astype(np.float32)
     n = len(z_obs)
-    u = np.zeros((n, 1), np.float32)                     # WAAM: constant input, u = 0
+    u = fit["u"].astype(np.float32).reshape(n, -1)
+    speed = fit["speed"][:n].astype(np.float32)
+    zr = states[SID].astype(np.float32)[:n]
+    assert np.allclose(z_obs, uniform_filter1d(zr, SMOOTH, axis=0, mode="nearest"), atol=1e-5)
     zn = ((z_obs - mean) / std).astype(np.float32)
 
     z_id, d_id = model.rollout(zn[0], u, dt)
@@ -117,9 +129,9 @@ def main():
     z_fr = model.rollout_forced(zn[0], u, d_fr, dt)
     raw_fr = (z_fr * std + mean).astype(np.float32)
 
-    a = npt.load_pt(R / "results_generator_WAAM" / "stage_a.pt")
+    a = npt.load_pt(gen_dir / "stage_a.pt")
     dec = npt.StructureDecoder(a["dec"], a["mean_frame"])
-    vq = npt.ResidualVQDecoder(npt.load_pt(R / "results_generator_WAAM" / "stage_b.pt")["net"])
+    vq = npt.ResidualVQDecoder(npt.load_pt(gen_dir / "stage_b.pt")["net"])
 
     pick_id, pick_fr = retrieve(raw_id, bz, bounds), retrieve(raw_fr, bz, bounds)
     st_id, full_id = decode(raw_id, dec, vq, bc[pick_id])
@@ -142,11 +154,11 @@ def main():
                E_identified=float(E_id[k:].mean()), E_frozen=float(E_fr[k:].mean()),
                E_between_runs=E_pair,
                note=("computed with a numpy port of the forward pass (PyTorch unavailable); "
-                     "checked against gen_WAAM_video_3.npz written by the torch code"),
+                     f"checked against gen_{PROCESS}_{SID}.npz written by the torch code"),
                port_check=chk)
     (OUT / f"3b_{PROCESS}_{SID}.json").write_text(json.dumps(res, indent=1) + "\n")
     np.savez_compressed(OUT / f"3b_{PROCESS}_{SID}.npz",
-                        t=np.arange(n) * dt, t_f=chosen["t_f"], k=k, speed=np.zeros(n, np.float32),
+                        t=np.arange(n) * dt, t_f=chosen["t_f"], k=k, speed=speed,
                         z_obs=z_obs, z_id=raw_id, z_frozen=raw_fr,
                         delta_id=d_id, delta_frozen=d_fr,
                         struct_id=st_id, struct_frozen=st_fr, struct_obs=st_obs,

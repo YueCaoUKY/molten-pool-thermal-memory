@@ -1,0 +1,57 @@
+{
+ "process": "GMAW",
+ "record": "exp_05",
+ "grid": [
+  {
+   "share": 0.2,
+   "t_f": 7.6911,
+   "k": 93,
+   "med_dist_id": 0.1419464498758316,
+   "med_dist_frozen": 0.632354736328125,
+   "ratio": 4.4548821449279785
+  },
+  {
+   "share": 0.3,
+   "t_f": 11.4953,
+   "k": 139,
+   "med_dist_id": 0.1465594619512558,
+   "med_dist_frozen": 0.5280284881591797,
+   "ratio": 3.602827787399292
+  },
+  {
+   "share": 0.4,
+   "t_f": 15.3822,
+   "k": 186,
+   "med_dist_id": 0.13651806116104126,
+   "med_dist_frozen": 0.30964577198028564,
+   "ratio": 2.268167018890381
+  },
+  {
+   "share": 0.5,
+   "t_f": 19.1864,
+   "k": 232,
+   "med_dist_id": 0.16600701212882996,
+   "med_dist_frozen": 0.26963382959365845,
+   "ratio": 1.6242315769195557
+  }
+ ],
+ "chosen": {
+  "share": 0.5,
+  "t_f": 19.1864,
+  "k": 232,
+  "med_dist_id": 0.16600701212882996,
+  "med_dist_frozen": 0.26963382959365845,
+  "ratio": 1.6242315769195557
+ },
+ "E_identified": 0.004257042892277241,
+ "E_frozen": 0.014362892135977745,
+ "E_between_runs": 0.013180187903344631,
+ "note": "computed with a numpy port of the forward pass (PyTorch unavailable); checked against gen_GMAW_exp_05.npz written by the torch code",
+ "port_check": {
+  "max_abs_z": 7.748603820800781e-07,
+  "max_abs_delta": 1.1920928955078125e-07,
+  "max_abs_struct": 0.000860750675201416,
+  "max_abs_gen": 0.0009161345660686493,
+  "mean_abs_gen": 8.045499271247536e-05
+ }
+}
