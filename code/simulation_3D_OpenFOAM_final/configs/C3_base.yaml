@@ -1,0 +1,12 @@
+# Checkpoint-3 dataset base. Decision D4 (2026-09-13): the project owner asked
+# for the most realistic simulation, so the dataset uses the liquid-k x5
+# closure (peak surface temperature 2600-2930 K instead of 4800-5700 K with
+# x1). Mesh L2 (h 0.35 mm, dt 0.05 s) with the refined corridor extended to
+# x = 110 mm so that the V+ case (torch to 95 mm) stays inside it.
+extends: base_S0.yaml
+case_id: C3_S0
+description: Checkpoint-3 S0 (canonical schedule), liquid k x5, mesh L2 corridor to 110 mm, dt 0.05 s
+mesh:
+  x_fine_end: 0.110
+material:
+  liquid_k_multiplier: 5.0

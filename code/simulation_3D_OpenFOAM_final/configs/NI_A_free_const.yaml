@@ -1,0 +1,8 @@
+# A: free plate (natural convection and radiation on all faces), constant
+# input. The plate heat content rises throughout the weld.
+extends: NI_base.yaml
+case_id: NI_A_free_const
+description: "A: free plate, constant 190 A at 2.5 mm/s for 60 s"
+schedule:
+  segments:
+    - {x_start: 0.010, current: 190.0, speed: 0.0025, duration: 60.0}

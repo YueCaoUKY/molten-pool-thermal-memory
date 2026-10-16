@@ -1,0 +1,20 @@
+{
+ "case_id": "PP_steel_speed_cooled_v2",
+ "run_dir": "/home/troy/OpenFOAM/troy-14/run/molten_pool_3d/PP_steel_speed_cooled_v2",
+ "nprocs": 6,
+ "timings_s": {
+  "blockMesh": 5.401914834976196,
+  "checkMesh": 21.579633235931396,
+  "writeCellCentres": 4.244016408920288,
+  "decomposePar": 2.3763904571533203,
+  "additiveFoam": 4030.2045726776123,
+  "reconstructPar": 341.8614065647125
+ },
+ "versions": {
+  "openfoam14_package": "20260724",
+  "additivefoam_commit": "9c05c5eb54db03faa342b14b0806efe740de8c44",
+  "host": "troy-OMEN-MAX-Gaming-Laptop-16-ak0xxx",
+  "python": "3.14.7"
+ },
+ "collected": "2026-09-28T12:43:55-0400"
+}

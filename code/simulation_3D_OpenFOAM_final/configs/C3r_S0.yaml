@@ -1,0 +1,11 @@
+# Realism-calibrated source (decision D9, 2026-09-13): eta 0.70 and Gaussian
+# sigma 2.6 mm, calibrated against Clain et al. (2017) on the same plate
+# (V9gtaw: the fusion zone and the late energy level are matched; the
+# bottom-face thermocouple peaks remain overpredicted). Everything else as
+# C3_S0.
+extends: C3_S0.yaml
+case_id: C3r_S0
+source:
+  eta: 0.70
+  sigma: 2.6e-3
+description: S0 - canonical schedule from room temperature, then 20 s cooldown (identification case) [calibrated source eta 0.70, sigma 2.6 mm]

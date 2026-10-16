@@ -1,0 +1,20 @@
+# Python 3.12. Versions are the ones the results in the paper were produced with;
+# nearby versions should work. Install PyTorch first, from pytorch.org, matching your CUDA.
+torch==2.11.0
+torchvision==0.26.0
+numpy==2.5.2
+pandas==3.0.5
+scipy==1.18.1
+scikit-image==0.26.0
+matplotlib==3.11.1
+Pillow==12.3.0
+PyYAML==6.0.3
+opencv-python==5.0.0.93
+imageio-ffmpeg==0.6.0
+
+# DINOv2 ViT-B/14 is pulled at run time by torch.hub from facebookresearch/dinov2
+# (see code/section4/code/dinov2_wrapper.py); no extra package is needed for it.
+#
+# Not required to reproduce the tables and figures:
+#   - OpenFOAM 14 with AdditiveFOAM 2.0.0, to re-run the Section 5 simulations
+#   - vtk / paraview, only for the optional field-rendering scripts under code/simulation

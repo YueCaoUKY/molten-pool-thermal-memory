@@ -1,0 +1,18 @@
+# NODE-identification cases (owner's request, 2026-09-13): the arc is on for
+# the whole 60 s record and never switched off, and the pool exists throughout.
+# Same plate, steel, source (eta 0.70, sigma 2.6 mm; D9), mesh size and
+# numerics as C3r. The refined corridor is extended to x = 175 mm for the
+# 150 mm track (torch x = 10 -> 160 mm at 2.5 mm/s on average). No cooldown.
+extends: C3r_S0.yaml
+case_id: NI_base
+description: NODE-identification base, 60 s weld, arc always on
+mesh:
+  x_fine_end: 0.175
+schedule:
+  change_times: null
+  currents: null
+  speeds: null
+  t_heat_end: null
+  x0: null
+time:
+  t_end: 60.0

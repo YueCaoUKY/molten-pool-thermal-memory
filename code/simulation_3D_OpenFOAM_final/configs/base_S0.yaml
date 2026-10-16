@@ -1,0 +1,71 @@
+# Canonical S0: 3D heat-only counterpart of the 2D FEniCSx run
+# simulation_2D_FEM/Selected Sims/pool_steel_lit/config_used.yaml
+# (same plate, material tables, arc parameters and input schedule) plus a
+# 20 s zero-power cooldown. Liquid-k multiplier 1 is the physically transparent
+# baseline (IMPLEMENTATION_PLAN.md section 4); multiplier 5 is the declared
+# heat-spreading closure inherited from the 2D model (separate case).
+case_id: S0_k1_L2_dt0p05
+description: Canonical S0, liquid k x1, mesh L2 (h = 0.35 mm), dt = 0.05 s
+
+geometry:
+  Lx: 0.200          # m
+  Ly: 0.100          # m
+  H: 0.006           # m, plate thickness; top surface at z = 0
+
+mesh:
+  type: plate_corridor
+  level: L2
+  h: 3.5e-4          # m, cell size in the refined corridor (x, y)
+  hz: 1.75e-4        # m, vertical cell size in the top layer
+  x_fine_end: 0.090  # m, corridor x in [0, 90 mm]
+  y_half: 0.008      # m, corridor |y - y0| <= 8 mm
+  z_fine_depth: 0.002  # m, uniform top layer depth
+  q_xy: 1.1          # max geometric growth outside the corridor
+  q_z: 1.2
+
+material:
+  type: steel_fit    # quadratic fit of the 2D tables (decision D1)
+  liquid_k_multiplier: 1.0
+
+schedule:
+  change_times: [0.0, 4.0, 8.0, 12.0, 16.0]      # s
+  currents: [180.0, 220.0, 180.0, 220.0, 180.0]  # A
+  speeds: [0.003, 0.003, 0.004, 0.004, 0.003]    # m/s
+  voltage: 14.0      # V
+  t_heat_end: 20.0   # s
+  x0: 0.010          # m, torch x at t = 0
+  y0: 0.050          # m, track line
+
+source:
+  eta: 0.8           # absorbed fraction of V*I
+  sigma: 1.5e-3      # m, planar Gaussian standard deviation (2D sigma_arc)
+  depth: 5.0e-4      # m, exponential depth (95 % of power above it)
+  nPoints: [40, 40, 20]
+  tolerance: 1.0e-3
+  beam_dt: 0.01      # s, source sub-cycling interval
+
+boundary:
+  T_inf: 293.15      # K
+  default: {type: mixedTemperature, h: 15.0, emissivity: 0.6}
+  patches: {}
+
+initial:
+  T: 293.15          # K
+
+time:
+  t_end: 40.0        # s (20 s heating + 20 s cooldown)
+  dt: 0.05           # s, fixed implicit step
+  snapshot_interval: 0.1   # s, T and alpha.solid written for research signals
+  full_write_interval: 5.0 # s, all fields (restart points)
+
+solver:
+  nThermoCorrectors: 50
+  thermoTolerance: 1.0e-6
+  T_tolerance: 1.0e-10
+  T_maxIter: 200
+
+run:
+  nprocs: 12
+
+outputs:
+  meltPoolDimensions: true

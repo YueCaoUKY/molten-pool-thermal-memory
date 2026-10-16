@@ -1,0 +1,13 @@
+{
+ "case_id": "PP_ss304_speed_cooled_v2",
+ "run_dir": "/home/troy/OpenFOAM/troy-14/run/molten_pool_3d/PP_ss304_speed_cooled_v2",
+ "nprocs": 12,
+ "timings_s": {},
+ "versions": {
+  "openfoam14_package": "20260724",
+  "additivefoam_commit": "9c05c5eb54db03faa342b14b0806efe740de8c44",
+  "host": "troy-OMEN-MAX-Gaming-Laptop-16-ak0xxx",
+  "python": "3.14.7"
+ },
+ "collected": "2026-09-29T14:46:03-0400"
+}

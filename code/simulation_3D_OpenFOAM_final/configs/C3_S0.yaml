@@ -1,0 +1,3 @@
+extends: C3_base.yaml
+case_id: C3_S0
+description: S0 - canonical schedule from room temperature, then 20 s cooldown (identification case)

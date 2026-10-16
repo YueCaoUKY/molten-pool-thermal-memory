@@ -1,0 +1,324 @@
+{
+ "columns": {
+  "t_s": "time (s)",
+  "I_A": "arc current on [t, t+dt) (A); 0 during cooldown",
+  "V_V": "arc voltage (V)",
+  "u_mm_s": "travel speed on [t, t+dt) (mm/s)",
+  "P_incident_W": "V*I (W)",
+  "P_abs_nominal_W": "eta*V*I (W)",
+  "P_abs_logged_W": "AdditiveFOAM domain-integrated source averaged over (t-0.1 s, t] (W)",
+  "x_torch_mm": "torch x (mm)",
+  "y_torch_mm": "torch y (mm)",
+  "T_top_max_K": "maximum top-surface (patch face) temperature (K)",
+  "T_top_roi_mean_K": "area-weighted mean top temperature in a 10 mm x 10 mm square centred on the torch (K)",
+  "T_max_3d_K": "maximum cell temperature (K)",
+  "T_min_3d_K": "minimum over cells and boundary faces (K); must not fall below T_inf",
+  "Q_rad_W": "radiative part of Q_loss_W (W)",
+  "top_area_above_3000K_mm2": "top-surface area above 3000 K (mm^2); superheat the heat-only model cannot limit (steel boils near 3100 K)",
+  "top_area_liq_mm2": "top-surface area with T > liquidus, bilinear on 0.05 mm (mm^2)",
+  "top_length_liq_mm": "x extent of the top-surface liquidus region (mm)",
+  "top_width_liq_mm": "y extent of the top-surface liquidus region (mm)",
+  "top_centroid_x_liq_mm": "centroid x of the top-surface liquidus region (mm)",
+  "top_centroid_y_liq_mm": "centroid y of the top-surface liquidus region (mm)",
+  "top_area_sol_mm2": "as top_area_liq_mm2 for T > solidus",
+  "top_length_sol_mm": "as top_length_liq_mm for T > solidus",
+  "top_width_sol_mm": "as top_width_liq_mm for T > solidus",
+  "depth_liq_mm": "maximum depth below the top of T >= liquidus, linear in z per column (mm)",
+  "depth_sol_mm": "as depth_liq_mm for solidus",
+  "vol_liquid_mm3": "sum of V*(1 - alpha.solid) (mm^3)",
+  "vol_above_liq_mm3": "volume of cells with T > liquidus (mm^3)",
+  "vol_above_sol_mm3": "volume of cells with T > solidus (mm^3)",
+  "Tbar_max_K": "maximum of the thickness-averaged temperature (comparable to 2D peak_T)",
+  "Tbar_area_Tm_mm2": "area where the thickness-averaged T > (solidus+liquidus)/2 (2D pool_area definition)",
+  "Tbar_area_liq_mm2": "area where the thickness-averaged T > liquidus (mm^2)",
+  "T_bottom_under_torch_K": "bottom-surface temperature below the torch (K)",
+  "T_bottom_max_K": "maximum bottom-surface temperature (K)",
+  "H_J": "enthalpy rise of the plate rel. solid at T_inf, sensible + latent (J)",
+  "delta_H_K": "H / (rho cp_ref V_plate), cp_ref = model cp at T_inf (K)",
+  "mean_T_rise_K": "volume-mean T - T_inf (comparable to 2D delta) (K)",
+  "dHK_ring_5_15mm_K": "enthalpy rise per rho cp_ref V in the full-thickness ring 5-15 mm from the torch axis (K)",
+  "dHK_lower_half_K": "enthalpy rise per rho cp_ref V of the lower half of the plate, z < -H/2 (K)",
+  "E_src_J": "cumulative absorbed energy from the solver log (J)",
+  "Q_loss_W": "convective + radiative loss rate over all patches (W)",
+  "E_loss_J": "cumulative loss, trapezoidal on snapshots (J)",
+  "residual_J": "H - H(0) - (E_src - E_loss) (J)",
+  "residual_rel": "residual_J / total absorbed energy of the run",
+  "alpha_consistency": "max |alpha.solid - alpha(T)| over cells (thermoPath consistency)",
+  "Q_loss_bottom_W": "loss rate through patch bottom (W)",
+  "Q_loss_top_W": "loss rate through patch top (W)",
+  "Q_loss_xmin_W": "loss rate through patch xmin (W)",
+  "Q_loss_xmax_W": "loss rate through patch xmax (W)",
+  "Q_loss_ymin_W": "loss rate through patch ymin (W)",
+  "Q_loss_ymax_W": "loss rate through patch ymax (W)",
+  "window_clipped_liq": "1 if the liquidus region touched the pool-metric window edge",
+  "window_clipped_sol": "1 if the solidus region touched the pool-metric window edge"
+ },
+ "T_inf": 293.15,
+ "cp_ref": 449.07461863228326,
+ "rho": 7400.0,
+ "V_plate_m3": 0.00012,
+ "liquidus": 1800.0,
+ "solidus": 1750.0,
+ "roi_half_width_m": 0.005,
+ "ring_m": [
+  0.005,
+  0.015
+ ],
+ "pool_window_m": [
+  -0.025,
+  0.01,
+  0.01
+ ],
+ "pool_window_dx_m": 5e-05,
+ "top_grid_dx_m": 0.0005,
+ "profile_offsets_behind_torch_m": [
+  0.0,
+  0.002,
+  0.005,
+  0.01,
+  0.02
+ ],
+ "probes_xyz_m": [
+  [
+   0.02,
+   0.05,
+   0.0
+  ],
+  [
+   0.02,
+   0.05,
+   -0.001
+  ],
+  [
+   0.02,
+   0.05,
+   -0.003
+  ],
+  [
+   0.02,
+   0.05,
+   -0.006
+  ],
+  [
+   0.02,
+   0.052500000000000005,
+   0.0
+  ],
+  [
+   0.02,
+   0.052500000000000005,
+   -0.001
+  ],
+  [
+   0.02,
+   0.052500000000000005,
+   -0.003
+  ],
+  [
+   0.02,
+   0.052500000000000005,
+   -0.006
+  ],
+  [
+   0.02,
+   0.055,
+   0.0
+  ],
+  [
+   0.02,
+   0.055,
+   -0.001
+  ],
+  [
+   0.02,
+   0.055,
+   -0.003
+  ],
+  [
+   0.02,
+   0.055,
+   -0.006
+  ],
+  [
+   0.02,
+   0.060000000000000005,
+   0.0
+  ],
+  [
+   0.02,
+   0.060000000000000005,
+   -0.001
+  ],
+  [
+   0.02,
+   0.060000000000000005,
+   -0.003
+  ],
+  [
+   0.02,
+   0.060000000000000005,
+   -0.006
+  ],
+  [
+   0.04,
+   0.05,
+   0.0
+  ],
+  [
+   0.04,
+   0.05,
+   -0.001
+  ],
+  [
+   0.04,
+   0.05,
+   -0.003
+  ],
+  [
+   0.04,
+   0.05,
+   -0.006
+  ],
+  [
+   0.04,
+   0.052500000000000005,
+   0.0
+  ],
+  [
+   0.04,
+   0.052500000000000005,
+   -0.001
+  ],
+  [
+   0.04,
+   0.052500000000000005,
+   -0.003
+  ],
+  [
+   0.04,
+   0.052500000000000005,
+   -0.006
+  ],
+  [
+   0.04,
+   0.055,
+   0.0
+  ],
+  [
+   0.04,
+   0.055,
+   -0.001
+  ],
+  [
+   0.04,
+   0.055,
+   -0.003
+  ],
+  [
+   0.04,
+   0.055,
+   -0.006
+  ],
+  [
+   0.04,
+   0.060000000000000005,
+   0.0
+  ],
+  [
+   0.04,
+   0.060000000000000005,
+   -0.001
+  ],
+  [
+   0.04,
+   0.060000000000000005,
+   -0.003
+  ],
+  [
+   0.04,
+   0.060000000000000005,
+   -0.006
+  ],
+  [
+   0.06,
+   0.05,
+   0.0
+  ],
+  [
+   0.06,
+   0.05,
+   -0.001
+  ],
+  [
+   0.06,
+   0.05,
+   -0.003
+  ],
+  [
+   0.06,
+   0.05,
+   -0.006
+  ],
+  [
+   0.06,
+   0.052500000000000005,
+   0.0
+  ],
+  [
+   0.06,
+   0.052500000000000005,
+   -0.001
+  ],
+  [
+   0.06,
+   0.052500000000000005,
+   -0.003
+  ],
+  [
+   0.06,
+   0.052500000000000005,
+   -0.006
+  ],
+  [
+   0.06,
+   0.055,
+   0.0
+  ],
+  [
+   0.06,
+   0.055,
+   -0.001
+  ],
+  [
+   0.06,
+   0.055,
+   -0.003
+  ],
+  [
+   0.06,
+   0.055,
+   -0.006
+  ],
+  [
+   0.06,
+   0.060000000000000005,
+   0.0
+  ],
+  [
+   0.06,
+   0.060000000000000005,
+   -0.001
+  ],
+  [
+   0.06,
+   0.060000000000000005,
+   -0.003
+  ],
+  [
+   0.06,
+   0.060000000000000005,
+   -0.006
+  ]
+ ],
+ "E_src_total_J": 194980.80000011582
+}

@@ -1,0 +1,168 @@
+case_id: PP_ss304_both_free
+description: 70.5 A at 0.47 mm/s and 61.6 A at 0.53 mm/s in blocks of 60 s, free plate
+  [AISI 304L]
+geometry:
+  Lx: 0.2
+  Ly: 0.1
+  H: 0.006
+mesh:
+  type: plate_corridor
+  level: L2
+  h: 0.00035
+  hz: 0.000175
+  x_fine_end: 0.175
+  y_half: 0.008
+  z_fine_depth: 0.002
+  q_xy: 1.1
+  q_z: 1.2
+material:
+  type: ss304_kim
+  liquid_k_multiplier: 5.0
+schedule:
+  change_times: null
+  currents: null
+  speeds: null
+  voltage: 14.0
+  t_heat_end: null
+  x0: null
+  y0: 0.05
+  segments:
+  - x_start: 0.01
+    current: 70.8
+    speed: 0.0004476315
+    duration: 11.82
+    direction: 1
+  - current: 69.6
+    speed: 0.00048748496
+    duration: 9.48
+    direction: 1
+  - current: 70.1
+    speed: 0.00044836771
+    duration: 10.58
+    direction: 1
+  - current: 71.3
+    speed: 0.0004940219
+    duration: 11.49
+    direction: 1
+  - current: 70.2
+    speed: 0.00047776717
+    duration: 6.63
+    direction: 1
+  - current: 70.5
+    speed: 0.00047
+    duration: 10
+    direction: 1
+  - current: 59.2
+    speed: 0.00052567659
+    duration: 9.77
+    direction: 1
+  - current: 61.4
+    speed: 0.00053086159
+    duration: 8.7
+    direction: 1
+  - current: 63.1
+    speed: 0.0005388853
+    duration: 11.72
+    direction: 1
+  - current: 61.5
+    speed: 0.00052041289
+    duration: 10.2
+    direction: 1
+  - current: 59.6
+    speed: 0.00053328017
+    duration: 9.53
+    direction: 1
+  - current: 64.1
+    speed: 0.00049420779
+    duration: 0.08
+    direction: 1
+  - current: 61.6
+    speed: 0.00053
+    duration: 10
+    direction: 1
+  - current: 70.2
+    speed: 0.00046762208
+    duration: 8.69
+    direction: 1
+  - current: 69
+    speed: 0.0004780313
+    duration: 9.23
+    direction: 1
+  - current: 67.9
+    speed: 0.00047117779
+    duration: 11.72
+    direction: 1
+  - current: 68.3
+    speed: 0.00047619625
+    duration: 11.84
+    direction: 1
+  - current: 70.2
+    speed: 0.00045349389
+    duration: 8.52
+    direction: 1
+  - current: 70.5
+    speed: 0.00047
+    duration: 10
+    direction: 1
+  - current: 59.5
+    speed: 0.00052301307
+    duration: 8.4
+    direction: 1
+  - current: 60.7
+    speed: 0.00051457233
+    duration: 8.47
+    direction: 1
+  - current: 61
+    speed: 0.00054395037
+    duration: 8.97
+    direction: 1
+  - current: 63.4
+    speed: 0.00050132445
+    duration: 8.29
+    direction: 1
+  - current: 59.7
+    speed: 0.00054195404
+    duration: 8.41
+    direction: 1
+  - current: 61.3
+    speed: 0.00055699928
+    duration: 7.46
+    direction: 1
+  - current: 61.6
+    speed: 0.00053
+    duration: 10
+    direction: 1
+source:
+  eta: 0.7
+  sigma: 0.0026
+  depth: 0.0005
+  nPoints:
+  - 40
+  - 40
+  - 20
+  tolerance: 0.001
+  beam_dt: 0.01
+boundary:
+  T_inf: 293.15
+  default:
+    type: mixedTemperature
+    h: 15.0
+    emissivity: 0.6
+  patches: {}
+initial:
+  T: 293.15
+time:
+  t_end: 240
+  dt: 0.05
+  snapshot_interval: 0.1
+  full_write_interval: 5.0
+solver:
+  nThermoCorrectors: 50
+  thermoTolerance: 1.0e-06
+  T_tolerance: 1.0e-10
+  T_maxIter: 200
+run:
+  nprocs: 6
+outputs:
+  meltPoolDimensions: true
+config_file: base_S0.yaml

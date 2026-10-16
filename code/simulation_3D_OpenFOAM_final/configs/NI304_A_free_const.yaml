@@ -1,0 +1,13 @@
+# Same design as NI_A_free_const with the plate material changed to AISI 304L stainless
+# steel (Kim 1975, ANL-75-55; liquid-conductivity multiplier 5 as for the
+# low-carbon steel) and every current scaled by 0.85. At the original
+# currents (screening run of case C, 2026-09-14) the 304L pool was 1.5x larger
+# and the solidus reached 5.98 of the 6 mm thickness; x0.85 keeps penetration
+# partial. Segment list generated from NI_A_free_const.yaml.
+extends: NI_A_free_const.yaml
+case_id: NI304_A_free_const
+description: 'A: free plate, constant 161.5 A at 2.5 mm/s for 60 s [AISI 304L, currents x0.85]'
+material: {type: ss304_kim, liquid_k_multiplier: 5.0}
+schedule:
+  segments:
+  - {x_start: 0.01, current: 161.5, speed: 0.0025, duration: 60.0}

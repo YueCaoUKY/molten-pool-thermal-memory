@@ -1,0 +1,20 @@
+{
+ "case_id": "PP_ss304_both_free",
+ "run_dir": "/home/troy/OpenFOAM/troy-14/run/molten_pool_3d/PP_ss304_both_free",
+ "nprocs": 6,
+ "timings_s": {
+  "blockMesh": 5.269956827163696,
+  "checkMesh": 22.96645951271057,
+  "writeCellCentres": 4.328274250030518,
+  "decomposePar": 2.3885884284973145,
+  "additiveFoam": 3742.8161718845367,
+  "reconstructPar": 320.4775085449219
+ },
+ "versions": {
+  "openfoam14_package": "20260724",
+  "additivefoam_commit": "9c05c5eb54db03faa342b14b0806efe740de8c44",
+  "host": "troy-OMEN-MAX-Gaming-Laptop-16-ak0xxx",
+  "python": "3.14.7"
+ },
+ "collected": "2026-09-28T00:37:46-0400"
+}

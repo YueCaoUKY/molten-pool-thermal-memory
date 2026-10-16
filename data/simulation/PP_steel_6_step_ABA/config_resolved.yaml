@@ -1,0 +1,76 @@
+case_id: PP_steel_6_step_ABA
+description: 'step sequence A-B-A: 76.6/89.8/76.6 A, 60 s each, 0.5 mm/s, free plate
+  [low-carbon steel]'
+geometry:
+  Lx: 0.2
+  Ly: 0.1
+  H: 0.006
+mesh:
+  type: plate_corridor
+  level: L2
+  h: 0.00035
+  hz: 0.000175
+  x_fine_end: 0.175
+  y_half: 0.008
+  z_fine_depth: 0.002
+  q_xy: 1.1
+  q_z: 1.2
+material:
+  type: steel_fit
+  liquid_k_multiplier: 5.0
+schedule:
+  change_times: null
+  currents: null
+  speeds: null
+  voltage: 14.0
+  t_heat_end: null
+  x0: null
+  y0: 0.05
+  segments:
+  - x_start: 0.01
+    current: 76.6
+    speed: 0.0005
+    duration: 60.0
+    direction: 1
+  - current: 89.8
+    speed: 0.0005
+    duration: 60.0
+    direction: 1
+  - current: 76.6
+    speed: 0.0005
+    duration: 60.0
+    direction: 1
+source:
+  eta: 0.7
+  sigma: 0.0026
+  depth: 0.0005
+  nPoints:
+  - 40
+  - 40
+  - 20
+  tolerance: 0.001
+  beam_dt: 0.01
+boundary:
+  T_inf: 293.15
+  default:
+    type: mixedTemperature
+    h: 15.0
+    emissivity: 0.6
+  patches: {}
+initial:
+  T: 293.15
+time:
+  t_end: 180
+  dt: 0.05
+  snapshot_interval: 0.1
+  full_write_interval: 5.0
+solver:
+  nThermoCorrectors: 50
+  thermoTolerance: 1.0e-06
+  T_tolerance: 1.0e-10
+  T_maxIter: 200
+run:
+  nprocs: 12
+outputs:
+  meltPoolDimensions: true
+config_file: base_S0.yaml

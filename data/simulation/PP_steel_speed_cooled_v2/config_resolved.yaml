@@ -1,0 +1,192 @@
+case_id: PP_steel_speed_cooled_v2
+description: travel speed 0.37/0.63 mm/s in six blocks of 40 s at a fixed 82.9 A,
+  cooled backing [low-carbon steel]
+geometry:
+  Lx: 0.2
+  Ly: 0.1
+  H: 0.006
+mesh:
+  type: plate_corridor
+  level: L2
+  h: 0.00035
+  hz: 0.000175
+  x_fine_end: 0.175
+  y_half: 0.008
+  z_fine_depth: 0.002
+  q_xy: 1.1
+  q_z: 1.2
+material:
+  type: steel_fit
+  liquid_k_multiplier: 5.0
+schedule:
+  change_times: null
+  currents: null
+  speeds: null
+  voltage: 14.0
+  t_heat_end: null
+  x0: null
+  y0: 0.05
+  segments:
+  - x_start: 0.01
+    current: 82.9
+    speed: 0.00037110794
+    duration: 8.12
+    direction: 1
+  - current: 82.9
+    speed: 0.0003592966
+    duration: 6.22
+    direction: 1
+  - current: 82.9
+    speed: 0.0003829638
+    duration: 7.28
+    direction: 1
+  - current: 82.9
+    speed: 0.00036633443
+    duration: 7.7
+    direction: 1
+  - current: 82.9
+    speed: 0.00035739276
+    duration: 0.68
+    direction: 1
+  - current: 82.9
+    speed: 0.00037
+    duration: 10
+    direction: 1
+  - current: 82.9
+    speed: 0.00064675238
+    duration: 8.53
+    direction: 1
+  - current: 82.9
+    speed: 0.00061392684
+    duration: 9.13
+    direction: 1
+  - current: 82.9
+    speed: 0.00061229661
+    duration: 7.81
+    direction: 1
+  - current: 82.9
+    speed: 0.00066137166
+    duration: 4.53
+    direction: 1
+  - current: 82.9
+    speed: 0.00063
+    duration: 10
+    direction: 1
+  - current: 82.9
+    speed: 0.00037549027
+    duration: 9.61
+    direction: 1
+  - current: 82.9
+    speed: 0.00037186639
+    duration: 9.99
+    direction: 1
+  - current: 82.9
+    speed: 0.00037471549
+    duration: 6.5
+    direction: 1
+  - current: 82.9
+    speed: 0.00034383143
+    duration: 3.9
+    direction: 1
+  - current: 82.9
+    speed: 0.00037
+    duration: 10
+    direction: 1
+  - current: 82.9
+    speed: 0.00065101887
+    duration: 7.63
+    direction: 1
+  - current: 82.9
+    speed: 0.00062083403
+    duration: 9.04
+    direction: 1
+  - current: 82.9
+    speed: 0.00063438016
+    duration: 6.92
+    direction: 1
+  - current: 82.9
+    speed: 0.00061317873
+    duration: 6.41
+    direction: 1
+  - current: 82.9
+    speed: 0.00063
+    duration: 10
+    direction: 1
+  - current: 82.9
+    speed: 0.00035258188
+    duration: 9.94
+    direction: 1
+  - current: 82.9
+    speed: 0.00038146553
+    duration: 7.02
+    direction: 1
+  - current: 82.9
+    speed: 0.00037134614
+    duration: 8.66
+    direction: 1
+  - current: 82.9
+    speed: 0.00038849099
+    duration: 4.38
+    direction: 1
+  - current: 82.9
+    speed: 0.00037
+    duration: 10
+    direction: 1
+  - current: 82.9
+    speed: 0.00066124048
+    duration: 6.32
+    direction: 1
+  - current: 82.9
+    speed: 0.00063331842
+    duration: 6.75
+    direction: 1
+  - current: 82.9
+    speed: 0.00062909018
+    duration: 9.92
+    direction: 1
+  - current: 82.9
+    speed: 0.00059992672
+    duration: 7.01
+    direction: 1
+  - current: 82.9
+    speed: 0.00063
+    duration: 10
+    direction: 1
+source:
+  eta: 0.7
+  sigma: 0.0026
+  depth: 0.0005
+  nPoints:
+  - 40
+  - 40
+  - 20
+  tolerance: 0.001
+  beam_dt: 0.01
+boundary:
+  T_inf: 293.15
+  default:
+    type: mixedTemperature
+    h: 15.0
+    emissivity: 0.6
+  patches:
+    bottom:
+      type: mixedTemperature
+      h: 700.0
+      emissivity: 0.0
+initial:
+  T: 293.15
+time:
+  t_end: 240
+  dt: 0.05
+  snapshot_interval: 0.1
+  full_write_interval: 5.0
+solver:
+  nThermoCorrectors: 50
+  thermoTolerance: 1.0e-06
+  T_tolerance: 1.0e-10
+  T_maxIter: 200
+run:
+  nprocs: 6
+outputs:
+  meltPoolDimensions: true
+config_file: base_S0.yaml
